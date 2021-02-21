@@ -14,7 +14,7 @@ def adder(fpath):
 		script = soup.find_all("script")
 
 		regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
-		url = re.findall(regex,str(script[4]))
+		
 		
 
 		for i in link:
@@ -40,11 +40,14 @@ def adder(fpath):
 
 				# <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 	
-		fp.close()
+		fp.close()	
 
-	with open(fpath, "w") as file:
-		file.write(str(soup))
-	
+	# with open(fpath, "w") as file:
+	# 	print(str(soup))
+	# 	file.write(str(soup))
+	import io
+	with io.open(fpath, "w", encoding="utf-8") as f:
+		f.write(str(soup))
 	return r'Added {% static '' %} in ' + fpath + 	' ...Done' 
 
 
@@ -61,7 +64,7 @@ if __name__ == "__main__":
 		while temp !=0:
 			path = str(input("Please add the file path : "))
 			print(adder(path))
-			temp = int(input("Please press any key to add more file or 0 to exit"))
+			temp = int(input("Please press 1  to add more file or 0 to exit"))
 	elif choice ==2:
 		ls = os.listdir()
 		cwd = os.getcwd()
@@ -70,4 +73,4 @@ if __name__ == "__main__":
 			if i[-4:] == 'html':
 				print(adder(os.path.join(os.getcwd(), i)))
 
-
+	input("enter any key to exit...")
