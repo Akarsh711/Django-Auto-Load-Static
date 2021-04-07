@@ -16,30 +16,36 @@ def adder(fpath):
 		regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
 		
 		
+		try:
+			for i in link:
+				url = re.findall(regex, i.attrs["href"])
+				if url == []:
+					temp = i.attrs["href"]
+					temp2 = r"{% static '" + temp + r"' %}"
+					i.attrs["href"] = temp2
+		except:
+			pass
 
-		for i in link:
-			url = re.findall(regex, i.attrs["href"])
-			if url == []:
-				temp = i.attrs["href"]
-				temp2 = r"{% static '" + temp + r"' %}"
-				i.attrs["href"] = temp2
+		try:
+			for i in img:
+				url = re.findall(regex, i.attrs["src"])
+				if url == []:
+					temp = i.attrs["src"]
+					temp2 = r"{% static '" + temp + r"' %}"
+					i.attrs["src"] = temp2
+		except:
+			pass
 
-		for i in img:
-			url = re.findall(regex, i.attrs["src"])
-			if url == []:
-				temp = i.attrs["src"]
-				temp2 = r"{% static '" + temp + r"' %}"
-				i.attrs["src"] = temp2
-
-		for i in script:
-			url = re.findall(regex, i.attrs["src"])
-			if url == []:
-				temp = i.attrs["src"]
-				temp2 = r"{% static '" + temp + r"' %}"
-				i.attrs["src"] = temp2
-
-				# <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-	
+		try:
+			for i in script:
+				url = re.findall(regex, i.attrs["src"])
+				if url == []:
+					temp = i.attrs["src"]
+					temp2 = r"{% static '" + temp + r"' %}"
+					i.attrs["src"] = temp2
+					# <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+		except:
+			pass
 		fp.close()	
 
 	# with open(fpath, "w") as file:
